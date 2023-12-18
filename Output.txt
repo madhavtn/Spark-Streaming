@@ -1,0 +1,307 @@
+Stateless Streaming
+Message Published ->  {'id': 1, 'name': 'John', 'age': 30}
+Message delivered to user_data
+Message Published ->  {'id': 2, 'name': 'Jane', 'age': 25}
+Message delivered to user_data
+Message Published ->  {'id': 3, 'name': 'Doe', 'age': 35}
+Message delivered to user_data
+Message Published ->  {'id': 4, 'name': 'Alice', 'age': 40}
+Message delivered to user_data
+Message Published ->  {'id': 5, 'name': 'Bob', 'age': 20}
+Message delivered to user_data
+
+-------------------------------------------                                     
+Batch: 0
+-------------------------------------------
++---+----+---+
+| id|name|age|
++---+----+---+
++---+----+---+
+
+-------------------------------------------                                     
+Batch: 1
+-------------------------------------------
++---+----+---+
+| id|name|age|
++---+----+---+
+|  1|John| 30|
++---+----+---+
+
+-------------------------------------------
+Batch: 2
+-------------------------------------------
++---+----+---+
+| id|name|age|
++---+----+---+
++---+----+---+
+
+-------------------------------------------
+Batch: 3
+-------------------------------------------
++---+----+---+
+| id|name|age|
++---+----+---+
+|  3| Doe| 35|
++---+----+---+
+
+
+
+Stateful Streaming
+Message Published ->  {"user_id": "user1", "amount": 100, "timestamp": "2023-07-30T10:00:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user2", "amount": 200, "timestamp": "2023-07-30T10:01:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user3", "amount": 300, "timestamp": "2023-07-30T10:02:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user1", "amount": 400, "timestamp": "2023-07-30T10:03:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user2", "amount": 500, "timestamp": "2023-07-30T10:04:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user3", "amount": 600, "timestamp": "2023-07-30T10:05:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user1", "amount": 700, "timestamp": "2023-07-30T10:06:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user2", "amount": 800, "timestamp": "2023-07-30T10:07:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user3", "amount": 900, "timestamp": "2023-07-30T10:08:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user1", "amount": 1000, "timestamp": "2023-07-30T10:09:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user2", "amount": 1100, "timestamp": "2023-07-30T10:10:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user3", "amount": 1200, "timestamp": "2023-07-30T10:11:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user1", "amount": 1300, "timestamp": "2023-07-30T10:12:00Z"}
+
+-------------------------------------------                                     
+Batch: 0
+-------------------------------------------
++-------+------------+
+|user_id|total_amount|
++-------+------------+
++-------+------------+
+
+-------------------------------------------                                     
+Batch: 1
+-------------------------------------------
++-------+------------+
+|user_id|total_amount|
++-------+------------+
+|  user1|         100|
++-------+------------+
+
+-------------------------------------------
+Batch: 2
+-------------------------------------------
++-------+------------+
+|user_id|total_amount|
++-------+------------+
+|  user2|         200|
+|  user3|         300|
+|  user1|         100|
++-------+------------+
+
+-------------------------------------------
+Batch: 3
+-------------------------------------------
++-------+------------+
+|user_id|total_amount|
++-------+------------+
+|  user2|         200|
+|  user3|         300|
+|  user1|         500|
++-------+------------+
+
+-------------------------------------------
+Batch: 4
+-------------------------------------------
++-------+------------+
+|user_id|total_amount|
++-------+------------+
+|  user2|         700|
+|  user3|         300|
+|  user1|         500|
++-------+------------+
+
+-------------------------------------------
+Batch: 5
+-------------------------------------------
++-------+------------+
+|user_id|total_amount|
++-------+------------+
+|  user2|         700|
+|  user3|         900|
+|  user1|         500|
++-------+------------+
+
+Window based Streaming
+Message Published ->  {"user_id": "user1", "amount": 100, "timestamp": "2023-07-30T10:00:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user2", "amount": 200, "timestamp": "2023-07-30T10:01:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user3", "amount": 300, "timestamp": "2023-07-30T10:02:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user1", "amount": 400, "timestamp": "2023-07-30T10:03:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user2", "amount": 500, "timestamp": "2023-07-30T10:04:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user3", "amount": 600, "timestamp": "2023-07-30T10:05:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user1", "amount": 700, "timestamp": "2023-07-30T10:06:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user2", "amount": 800, "timestamp": "2023-07-30T10:07:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user3", "amount": 900, "timestamp": "2023-07-30T10:08:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user1", "amount": 1000, "timestamp": "2023-07-30T10:09:00Z"}
+Message delivered to trx_data
+Message Published ->  {"user_id": "user2", "amount": 1100, "timestamp": "2023-07-30T10:10:00Z"}
+Message delivered to trx_data
+
+Batch: 0
+-------------------------------------------
++-------+------+------------+
+|user_id|window|total_amount|
++-------+------+------------+
++-------+------+------------+
+
+-------------------------------------------                                     
+Batch: 1
+-------------------------------------------
++-------+------------------------------------------+------------+
+|user_id|window                                    |total_amount|
++-------+------------------------------------------+------------+
+|user1  |{2023-07-30 10:00:00, 2023-07-30 10:03:00}|100         |
++-------+------------------------------------------+------------+
+
+-------------------------------------------
+Batch: 2
+-------------------------------------------
++-------+------------------------------------------+------------+
+|user_id|window                                    |total_amount|
++-------+------------------------------------------+------------+
+|user1  |{2023-07-30 10:00:00, 2023-07-30 10:03:00}|100         |
+|user2  |{2023-07-30 10:00:00, 2023-07-30 10:03:00}|200         |
++-------+------------------------------------------+------------+
+
+-------------------------------------------
+Batch: 3
+-------------------------------------------
++-------+------------------------------------------+------------+
+|user_id|window                                    |total_amount|
++-------+------------------------------------------+------------+
+|user3  |{2023-07-30 10:00:00, 2023-07-30 10:03:00}|300         |
+|user1  |{2023-07-30 10:00:00, 2023-07-30 10:03:00}|100         |
+|user2  |{2023-07-30 10:00:00, 2023-07-30 10:03:00}|200         |
++-------+------------------------------------------+------------+
+
+-------------------------------------------
+Batch: 4
+-------------------------------------------
++-------+------------------------------------------+------------+
+|user_id|window                                    |total_amount|
++-------+------------------------------------------+------------+
+|user1  |{2023-07-30 10:03:00, 2023-07-30 10:06:00}|400         |
+|user3  |{2023-07-30 10:00:00, 2023-07-30 10:03:00}|300         |
+|user1  |{2023-07-30 10:00:00, 2023-07-30 10:03:00}|100         |
+|user2  |{2023-07-30 10:00:00, 2023-07-30 10:03:00}|200         |
++-------+------------------------------------------+------------+
+
+-------------------------------------------
+Batch: 5
+-------------------------------------------
++-------+------------------------------------------+------------+
+|user_id|window                                    |total_amount|
++-------+------------------------------------------+------------+
+|user1  |{2023-07-30 10:03:00, 2023-07-30 10:06:00}|400         |
+|user2  |{2023-07-30 10:03:00, 2023-07-30 10:06:00}|500         |
+|user3  |{2023-07-30 10:00:00, 2023-07-30 10:03:00}|300         |
+|user1  |{2023-07-30 10:00:00, 2023-07-30 10:03:00}|100         |
+|user2  |{2023-07-30 10:00:00, 2023-07-30 10:03:00}|200         |
++-------+------------------------------------------+------------+
+
+
+Realtime joining
+
+Message published ->  {"id": "1", "value": "apple", "timestamp": "2023-07-30T10:00:00Z"}
+Message published ->  {"id": "2", "value": "banana", "timestamp": "2023-07-30T10:00:10Z"}
+Message published ->  {"id": "3", "value": "cherry", "timestamp": "2023-07-30T10:00:20Z"}
+Message published ->  {"id": "4", "value": "date", "timestamp": "2023-07-30T10:00:30Z"}
+Message published ->  {"id": "5", "value": "elderberry", "timestamp": "2023-07-30T10:00:40Z"}
+Message published ->  {"id": "6", "value": "fig", "timestamp": "2023-07-30T10:00:50Z"}
+Message published ->  {"id": "7", "value": "grape", "timestamp": "2023-07-30T10:01:00Z"}
+Message published ->  {"id": "8", "value": "honeydew", "timestamp": "2023-07-30T10:01:10Z"}
+Message published ->  {"id": "9", "value": "icaco", "timestamp": "2023-07-30T10:01:20Z"}
+Message published ->  {"id": "10", "value": "jackfruit", "timestamp": "2023-07-30T10:01:30Z"}
+Message published ->  {"id": "11", "value": "kiwi", "timestamp": "2023-07-30T10:01:40Z"}
+Message published ->  {"id": "12", "value": "lemon", "timestamp": "2023-07-30T10:01:50Z"}
+Message published ->  {"id": "13", "value": "mango", "timestamp": "2023-07-30T10:02:00Z"}
+Message published ->  {"id": "14", "value": "nectarine", "timestamp": "2023-07-30T10:02:10Z"}
+Message published ->  {"id": "15", "value": "orange", "timestamp": "2023-07-30T10:02:20Z"}
+Message published ->  {"id": "16", "value": "pineapple", "timestamp": "2023-07-30T10:02:30Z"}
+Message published ->  {"id": "17", "value": "quince", "timestamp": "2023-07-30T10:02:40Z"}
+Message published ->  {"id": "18", "value": "raspberry", "timestamp": "2023-07-30T10:02:50Z"}
+
+
+-------------------------------------------
+Batch: 0
+-------------------------------------------
++---+-----+---------+--------+
+|id |value|timestamp|category|
++---+-----+---------+--------+
++---+-----+---------+--------+
+
+-------------------------------------------                                     
+Batch: 1
+-------------------------------------------
++---+-----+-------------------+--------+
+|id |value|timestamp          |category|
++---+-----+-------------------+--------+
+|1  |apple|2023-07-30 10:00:00|fruit   |
++---+-----+-------------------+--------+
+
+-------------------------------------------
+Batch: 2
+-------------------------------------------
++---+------+-------------------+--------+
+|id |value |timestamp          |category|
++---+------+-------------------+--------+
+|2  |banana|2023-07-30 10:00:10|fruit   |
++---+------+-------------------+--------+
+
+-------------------------------------------
+Batch: 3
+-------------------------------------------
++---+------+-------------------+--------+
+|id |value |timestamp          |category|
++---+------+-------------------+--------+
+|3  |cherry|2023-07-30 10:00:20|fruit   |
++---+------+-------------------+--------+
+
+-------------------------------------------
+Batch: 4
+-------------------------------------------
++---+-----+-------------------+--------+
+|id |value|timestamp          |category|
++---+-----+-------------------+--------+
+|4  |date |2023-07-30 10:00:30|fruit   |
++---+-----+-------------------+--------+
+
+-------------------------------------------
+Batch: 5
+-------------------------------------------
++---+----------+-------------------+--------+
+|id |value     |timestamp          |category|
++---+----------+-------------------+--------+
+|5  |elderberry|2023-07-30 10:00:40|fruit   |
++---+----------+-------------------+--------+
+
+-------------------------------------------
+Batch: 6
+-------------------------------------------
++---+-----+-------------------+--------+
+|id |value|timestamp          |category|
++---+-----+-------------------+--------+
+|6  |fig  |2023-07-30 10:00:50|fruit   |
++---+-----+-------------------+--------+
+
